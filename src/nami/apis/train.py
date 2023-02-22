@@ -3,9 +3,9 @@ import os
 import os.path as osp
 from copy import deepcopy
 
-from mmengine.config import Config, ConfigDict, DictAction
-from mmengine.utils import digit_version
-from mmengine.utils.dl_utils import TORCH_VERSION
+from franky.config import Config, ConfigDict, DictAction
+from franky.utils import digit_version
+from franky.utils.dl_utils import TORCH_VERSION
 
 from nami.runner import Runner
 

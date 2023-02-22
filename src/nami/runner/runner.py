@@ -3,17 +3,17 @@ import shutil
 from typing import Dict, Union
 
 import torch.nn as nn
-from mmengine.logging import MMLogger
-from mmengine.model import is_model_wrapper
-from mmengine.registry import MODELS
-from mmengine.runner import Runner as Mmengine_Runner
+from franky.logging import OPLogger
+from franky.model import is_model_wrapper
+from franky.registry import MODELS
+from franky.runner import Runner as Franky_Runner
 
 from nami.registry import MODELS
 
-logger = MMLogger.get_current_instance()
+logger = OPLogger.get_current_instance()
 
 
-class Runner(Mmengine_Runner):
+class Runner(Franky_Runner):
     def build_model(self, model: Union[nn.Module, Dict]) -> nn.Module:
         """Build model.
 

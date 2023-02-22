@@ -1,7 +1,7 @@
 import json
 from typing import Optional
 
-import mmengine.dist as dist
+import franky.dist as dist
 
 from nami.registry import DATASETS
 from .base_dataset import BaseDataset

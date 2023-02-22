@@ -2,7 +2,7 @@ import os.path as osp
 from os import PathLike
 from typing import Optional, Sequence, Union
 
-from mmengine.dataset import BaseDataset as _BaseDataset
+from franky.dataset import BaseDataset as _BaseDataset
 
 from nami.registry import DATASETS, TRANSFORMS
 

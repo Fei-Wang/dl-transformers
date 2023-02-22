@@ -1,4 +1,4 @@
-from mmengine.evaluator import BaseMetric
+from franky.evaluator import BaseMetric
 from seqeval.metrics import f1_score
 
 from nami.registry import METRICS

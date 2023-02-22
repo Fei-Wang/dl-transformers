@@ -1,7 +1,7 @@
 from typing import Optional
 
 import torch.utils.checkpoint
-from mmengine.model import BaseModel
+from franky.model import BaseModel
 from torch import nn
 from torch.nn import CrossEntropyLoss
 from transformers import BertModel, BertPreTrainedModel

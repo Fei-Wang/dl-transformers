@@ -7,7 +7,7 @@ name = "pynami"
 description = "Deep Learning - Transformers"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {file = "LICENSE"}
+license = {text = "MIT License"}
 authors = [
     {name = "Fei Wang", email = "fei.comm@icloud.com"},
 ]
@@ -27,7 +27,7 @@ classifiers = [
 dynamic = ["version", "dependencies"]
 
 [project.urls]
-repository = "https://github.com/Fei-Wang/dl-transformers"
+repository = "https://github.com/Fei-Wang/opnlp"
 
 [tool.setuptools.dynamic]
 version = {attr = "nami.__version__"}

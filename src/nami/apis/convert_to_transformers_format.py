@@ -3,9 +3,7 @@ import os
 import os.path as osp
 from copy import deepcopy
 
-from mmengine.config import Config, ConfigDict, DictAction
-from mmengine.utils import digit_version
-from mmengine.utils.dl_utils import TORCH_VERSION
+from franky.config import Config, ConfigDict, DictAction
 from nami.runner import Runner
 
 
@@ -108,8 +106,6 @@ def merge_args(cfg, args):
         persistent_workers=True,
         collate_fn=dict(type='default_collate'),
     )
-    if digit_version(TORCH_VERSION) < digit_version('1.8.0'):
-        default_dataloader_cfg.persistent_workers = False
 
     def set_default_dataloader_cfg(cfg, field):
         if cfg.get(field, None) is None:
