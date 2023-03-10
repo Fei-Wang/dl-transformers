@@ -1,2 +1,1 @@
-from .mycollate import AlignCollate
-from .utils import my_default_collate
+from .collate_gpt import GPTCollate

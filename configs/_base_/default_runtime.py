@@ -13,13 +13,13 @@ default_hooks = dict(
     param_scheduler=dict(type='ParamSchedulerHook'),
 
     # save checkpoint per epoch.
-    checkpoint=dict(type='CheckpointHook', interval=1, save_best='f1', rule='greater', max_keep_ckpts=5),
+    checkpoint=dict(type='CheckpointHook', interval=1, max_keep_ckpts=5),
 
     # set sampler seed in distributed evrionment.
     sampler_seed=dict(type='DistSamplerSeedHook'),
 
-    # validation results visualization, set True to enable it.
-    # visualization=dict(type='VisualizationHook', enable=False),
+    # set save and load to save_pretrained and load_pretrained.
+    save_pretrained=dict(type='SavePretrainedHook')
 )
 
 # configure environment
@@ -43,7 +43,6 @@ log_level = 'INFO'
 
 # load from which checkpoint
 load_from = None
-# load_from = '/home/feiwang/projects/dl-transformers/nami/work_dirs/myconfig/best_f1_epoch_32.pth'
 
 # whether to resume training from the loaded checkpoint
 resume = False

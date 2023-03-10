@@ -3,7 +3,6 @@ from os import PathLike
 from typing import Optional, Sequence, Union
 
 from franky.dataset import BaseDataset as _BaseDataset
-
 from nami.registry import DATASETS, TRANSFORMS
 
 

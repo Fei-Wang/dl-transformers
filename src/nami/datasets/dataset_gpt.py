@@ -1,15 +1,12 @@
-import json
 from typing import Optional
 
 import franky.dist as dist
-
 from nami.registry import DATASETS
 from .base_dataset import BaseDataset
 
 
-
 @DATASETS.register_module()
-class MyDataset(BaseDataset):
+class GPTDataset(BaseDataset):
     def __init__(self,
                  ann_file: str,
                  test_mode: bool,
@@ -28,24 +25,14 @@ class MyDataset(BaseDataset):
 
         dist.barrier()
 
-        texts, gt_labels = [], []
+        texts = []
         with open(file, 'r', encoding='utf-8') as f:
             lines = f.readlines()
             for line in lines:
-                item = json.loads(line)
-                text = item['content']  # .replace('"', '')
-                label = item['annotation']
-                if label is None:
-                    label = []
-                else:
-                    label = [[temp['points'][0]['start'], temp['points'][0]['end'],
-                              temp['label'][0]] for temp in label]
-                    label.sort(key=lambda x: x[1])
-                texts.append(text)
-                gt_labels.append(label)
+                texts.append(line)
 
         data_list = []
-        for text, gt_label in zip(texts, gt_labels):
-            info = {'text': text, 'gt_label': gt_label}
+        for text in texts:
+            info = {'text': text}
             data_list.append(info)
         return data_list

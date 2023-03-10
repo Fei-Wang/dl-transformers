@@ -1,1 +1,1 @@
-from .mymetrics import MyMetrics
+from .metrics_gpt import GPTMetrics

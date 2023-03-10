@@ -1,7 +1,7 @@
 from transformers import pipeline, AutoTokenizer
 
-from nami import pipelines
-from nami import models
+from nami import models  # noqa
+from nami import pipelines  # noqa
 
 
 class Pipeline:
@@ -12,6 +12,3 @@ class Pipeline:
 
     def __call__(self, texts):
         return self.pipe(texts)
-
-
-

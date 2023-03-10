@@ -159,7 +159,7 @@ class CrossEntropyLoss(nn.Module):
         self.use_sigmoid = use_sigmoid
         self.use_soft = use_soft
         assert not (
-            self.use_soft and self.use_sigmoid
+                self.use_soft and self.use_sigmoid
         ), 'use_sigmoid and use_soft could not be set simultaneously'
 
         self.reduction = reduction

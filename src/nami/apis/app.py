@@ -1,22 +1,19 @@
 import gradio as gr
 
-from nami.apis.pipeline import Pipeline
-
-model_dir = '/home/feiwang/projects/dl-transformers/nami/work_dirs/myconfig/20230131_021320/save_transformer'
-pipe = Pipeline('my-token-classification', model_dir, device=1, batch_size=2)
+from .pipeline import Pipeline
 
 
-def predict(text):
-    return str(pipe(text))
+def app(task, model_dir, device=-1, batch_size=1, examples=[]):
+    pipe = Pipeline(task, model_dir, device=device, batch_size=batch_size)
 
+    def predict(text):
+        return str(pipe(text))
 
-examples = ['我是王飞，我居住在浙江省杭州市']
+    app = gr.Interface(
+        fn=predict,
+        inputs='text',
+        outputs='text',
+        examples=[examples]
+    )
 
-demo = gr.Interface(
-    fn=predict,
-    inputs='text',
-    outputs='text',
-    examples=[examples]
-)
-
-demo.launch(share=True)
+    app.launch(share=True)

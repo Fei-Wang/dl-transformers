@@ -1,13 +1,11 @@
-from transformers import AutoModelForTokenClassification
-from transformers.pipelines import PIPELINE_REGISTRY
+from transformers import AutoModelForCausalLM
+from transformers.pipelines import PIPELINE_REGISTRY, TextGenerationPipeline
 
-from .token_classification import MyTokenClassificationPipeline
 
 SUPPORTED_TASKS = {
-    "my-token-classification": {
-        "pipeline_class": MyTokenClassificationPipeline,
-        "pt_model": AutoModelForTokenClassification,
-        # "default": {"pt": ("superb/wav2vec2-base-superb-ks", "372e048")},
+    "text-generation": {
+        "pipeline_class": TextGenerationPipeline,
+        "pt_model": AutoModelForCausalLM,
         "type": "text",  # current support type: text, audio, image, multimodal
     }
 }

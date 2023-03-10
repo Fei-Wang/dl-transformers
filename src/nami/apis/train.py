@@ -4,24 +4,15 @@ import os.path as osp
 from copy import deepcopy
 
 from franky.config import Config, ConfigDict, DictAction
+from franky.runner import Runner, find_latest_checkpoint
 from franky.utils import digit_version
 from franky.utils.dl_utils import TORCH_VERSION
-
-from nami.runner import Runner
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a classifier')
     parser.add_argument('config', help='train config file path')
     parser.add_argument('--work-dir', help='the dir to save logs and models')
-    parser.add_argument(
-        '--resume',
-        nargs='?',
-        type=str,
-        const='auto',
-        help='If specify checkpoint path, resume from it, while if not '
-             'specify, try to auto resume from the latest checkpoint '
-             'in the work directory.')
     parser.add_argument(
         '--amp',
         action='store_true',
@@ -94,14 +85,6 @@ def merge_args(cfg, args):
         cfg.optim_wrapper.type = 'AmpOptimWrapper'
         cfg.optim_wrapper.setdefault('loss_scale', 'dynamic')
 
-    # resume training
-    if args.resume == 'auto':
-        cfg.resume = True
-        cfg.load_from = None
-    elif args.resume is not None:
-        cfg.resume = True
-        cfg.load_from = args.resume
-
     # enable auto scale learning rate
     if args.auto_scale_lr:
         cfg.auto_scale_lr.enable = True
@@ -110,8 +93,8 @@ def merge_args(cfg, args):
     default_dataloader_cfg = ConfigDict(
         pin_memory=True,
         persistent_workers=True,
-        collate_fn=dict(type='default_collate'),
     )
+
     if digit_version(TORCH_VERSION) < digit_version('1.8.0'):
         default_dataloader_cfg.persistent_workers = False
 
@@ -132,6 +115,21 @@ def merge_args(cfg, args):
 
     if args.cfg_options is not None:
         cfg.merge_from_dict(args.cfg_options)
+
+    if cfg.load_from is not None and 'save_pretrained' in cfg.default_hooks:
+        cfg.load_from = find_latest_checkpoint(cfg.load_from)
+        cfg.model.pretrained = cfg.load_from
+
+        def set_collate_pretrained(cfg, field):
+            if cfg.get(field, None) is None:
+                return
+            for v in cfg[field].collate.values():
+                if isinstance(v, dict):
+                    v.pretrained = cfg.load_from
+
+        set_collate_pretrained(cfg, 'train_dataloader')
+        set_collate_pretrained(cfg, 'val_dataloader')
+        set_collate_pretrained(cfg, 'test_dataloader')
 
     return cfg
 
