@@ -2,7 +2,7 @@ from nami.registry import COLLATE, TOKENIZERS
 
 
 @COLLATE.register_module()
-class GPTCollate:
+class RMCollate:
     def __init__(self, tokenizer, max_length=512, ignore_index=-100, **kwargs):
         self.tokenizer = TOKENIZERS.build(tokenizer)
         self.max_length = max_length
@@ -14,8 +14,18 @@ class GPTCollate:
         return tokens
 
     def __call__(self, data_batch):
-        # list of dict to dict of list
-        data = {k: [dic[k] for dic in data_batch] for k in data_batch[0]}
-        tokens = self._align(data['text'])
+        texts = []
+        sample_idx = []
+
+        for db in data_batch:
+            text = db['text']
+            answer = db['answer']
+            idx = db['sample_idx']
+            for ans in answer:
+                texts.append(text+ans)
+                sample_idx.append(idx)
+
+        tokens = self._align(texts)
+        tokens['sample_idx'] = sample_idx
 
         return tokens

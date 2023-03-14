@@ -1,1 +1,1 @@
-from . import gpt, utils
+from . import gpt, reward_model, utils
