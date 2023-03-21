@@ -7,7 +7,7 @@ transformers_pretrained_model_dir = '/datasets/models/gpts/gpt2-chinese'
 # )
 #
 model = dict(
-    type='GPTModel',
+    type='NamiGPT2LMHeadModel',
     gpt=dict(
         type='NamiAutoModel',
         model_type='GPT2LMHeadModel',

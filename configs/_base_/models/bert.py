@@ -1,7 +1,7 @@
 transformers_pretrained_model_dir = 'bert-base-chinese'
 
 model = dict(
-    type='RMModel',
+    type='NamiBertForSequenceClassification',
     bert=dict(
         type='NamiAutoModel',
         model_type='BertForSequenceClassification',

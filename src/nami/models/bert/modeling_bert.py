@@ -1,14 +1,11 @@
 from nami.registry import MODELS
-from ..utils import HFModel, Config
-
-
-class RMConfig(Config):
-    model_type = 'nami_rm'
+from .configuration_bert import NamiBertConfig
+from ..utils import HFModel
 
 
 @MODELS.register_module()
-class RMModel(HFModel):
-    config_class = RMConfig
+class NamiBertForSequenceClassification(HFModel):
+    config_class = NamiBertConfig
 
     def forward(
             self,
